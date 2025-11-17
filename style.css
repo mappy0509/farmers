@@ -1,3 +1,18 @@
+/*
+Theme Name: Farmers
+Theme URI: (テーマの配布先・紹介URL)
+Author: (あなたの名前または組織名)
+Author URI: (作者のURL)
+Description: 食卓FarmのためのオリジナルWordPressテーマ。
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: (テストしたWordPressバージョン)
+Requires PHP: 7.4
+License: (ライセンス Gnuなど)
+License URI: (ライセンスのURI)
+Text Domain: farmers
+*/
+
 /* Noto Sans JPを基本フォントに設定 */
 body {
     font-family: 'Noto Sans JP', 'Inter', sans-serif;
