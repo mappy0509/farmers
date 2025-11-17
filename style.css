@@ -1,0 +1,40 @@
+/* Noto Sans JPを基本フォントに設定 */
+body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+}
+/* LINEボタンの緑 */
+.line-green {
+    background-color: #06C755;
+}
+.line-green:hover {
+    background-color: #05a546;
+}
+
+/* --- フルードタイポグラフィ (clamp) --- */
+/* * clamp(MIN_SIZE, PREFERRED_SIZE, MAX_SIZE)
+ * MIN: これ以上小さくならない
+ * PREFERRED: 基本サイズ + ビューポート幅(vw)
+ * MAX: これ以上大きくならない
+*/
+
+/* メインビジュアルのH1 */
+.text-fluid-hero {
+    /* 画面幅に応じて 2.5rem (40px) から 3.75rem (60px) まで滑らかに変化 */
+    font-size: clamp(2.5rem, 1rem + 7vw, 3.75rem);
+}
+/* メインビジュアルのP */
+.text-fluid-hero-p {
+    /* 画面幅に応じて 1.125rem (18px) から 1.5rem (24px) まで変化 */
+    font-size: clamp(1.125rem, 0.5rem + 3vw, 1.5rem);
+}
+/* セクション見出し H2 */
+.text-fluid-h2 {
+    /* 画面幅に応じて 1.875rem (30px) から 2.5rem (40px) まで変化 */
+    font-size: clamp(1.875rem, 1.25rem + 3vw, 2.5rem);
+}
+/* カード見出し H3 */
+.text-fluid-h3 {
+    /* 画面幅に応じて 1.25rem (20px) から 1.75rem (28px) まで変化 */
+    font-size: clamp(1.25rem, 1rem + 1.5vw, 1.75rem);
+}
+/* -------------------------------------- */
