@@ -2,9 +2,6 @@
 /**
  * The template for displaying product archives.
  *
- * (Assuming a custom post type 'product' is registered
- * with 'has_archive' => 'products')
- *
  * @package Farmers
  * @since 1.0.0
  */
@@ -16,7 +13,7 @@ get_header();
         <div class="container mx-auto px-4">
             
             <h1 class="text-fluid-h2 font-bold text-gray-800 text-center mb-10">
-                <?php post_type_archive_title(); // 「商品」などと表示 ?>
+                <?php post_type_archive_title(); ?>
             </h1>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -67,14 +64,21 @@ get_header();
                             // ループ開始
                             while ( have_posts() ) :
                                 the_post();
+                                
+                                // WooCommerceの商品データを取得
+                                global $product;
+                                // ループ内で $product が正しくセットされているか確認し、なければ取得
+                                if ( ! is_a( $product, 'WC_Product' ) ) {
+                                    $product = wc_get_product( get_the_ID() );
+                                }
                             ?>
                         
                             <div id="product-<?php the_ID(); ?>" <?php post_class( 'bg-white rounded-lg shadow-lg overflow-hidden flex flex-col text-left' ); ?>>
                                 <div class="relative">
                                     <?php if ( has_post_thumbnail() ) : ?>
-                                        <img src="<?php the_post_thumbnail_url( 'medium_large' ); // 400x300に近いサイズ ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-48 object-cover">
+                                        <img src="<?php the_post_thumbnail_url( 'medium_large' ); ?>" alt="<?php the_title_attribute(); ?>" class="w-full h-48 object-cover">
                                     <?php else : ?>
-                                        <img src="https://placehold.co/400x300/e0e0e0/ffffff?text=No+Image" alt="画像がありません" class="w-full h-48 object-cover">
+                                        <img src="<?php echo wc_placeholder_img_src(); ?>" alt="No Image" class="w-full h-48 object-cover">
                                     <?php endif; ?>
                                     
                                     <a href="#" class="absolute bottom-3 left-3 flex items-center bg-white/90 backdrop-blur-sm rounded-full p-1 pr-3 shadow-md group transition-transform hover:scale-105">
@@ -101,8 +105,12 @@ get_header();
                                     </div>
                                     
                                     <div class="mt-auto flex justify-end items-baseline">
-                                        <span class="text-2xl font-bold text-red-600">800</span>
-                                        <span class="text-sm text-gray-600 ml-1">円 (税込)</span>
+                                        <?php if ( $product ) : ?>
+                                            <div class="text-2xl font-bold text-red-600 price-wrapper">
+                                                <?php echo $product->get_price_html(); ?>
+                                            </div>
+                                            <span class="text-sm text-gray-600 ml-1">(税込)</span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -112,15 +120,14 @@ get_header();
                         
                         <?php else : ?>
 
-                            <p class="text-lg text-gray-700 col-span-full">
-                                <?php esc_html_e( 'Sorry, no products matched your criteria.', 'farmers' ); ?>
+                            <p class="text-lg text-gray-700 col-span-full text-center py-10">
+                                <?php esc_html_e( '現在、商品は準備中です。', 'farmers' ); ?>
                             </p>
                         
                         <?php endif; ?>
 
                     </div> <nav class="flex justify-center mt-12">
                          <?php
-                        // WordPress 標準のページネーション
                         the_posts_pagination(
                             array(
                                 'prev_text' => '&laquo;',
