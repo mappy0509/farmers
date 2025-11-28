@@ -1,7 +1,7 @@
 // DOMが完全に読み込まれてからスクリプトを実行
 document.addEventListener('DOMContentLoaded', () => {
     
-    // モバイルメニューのトグル機能
+    // --- モバイルメニューのトグル機能 ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -13,35 +13,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ここから将来的な機能追加 ---
+    // --- 商品詳細ページ (single-product.php) の画像ギャラリー機能 ---
+    
+    // 1. メイン画像要素を取得
+    const mainImage = document.getElementById('main-product-image');
+    
+    // 2. すべてのサムネイルボタンを取得 (single-product.phpで生成した構造に基づく)
+    const thumbnailButtons = document.querySelectorAll('.grid.grid-cols-4.gap-2 button');
 
-    // 商品詳細ページ (single-product.php) の画像ギャラリー機能
-    // 
-    // 1. すべてのサムネイルボタンを取得
-    // const thumbnailButtons = document.querySelectorAll('.grid.grid-cols-4.gap-2 button');
-    // 2. メイン画像要素を取得
-    // const mainImage = document.getElementById('main-product-image');
-    // 
-    // if (thumbnailButtons.length > 0 && mainImage) {
-    //     thumbnailButtons.forEach(button => {
-    //         button.addEventListener('click', () => {
-    //             // 1. メイン画像のsrcを、クリックされたボタンの子imgのsrcに変更
-    //             const newImageSrc = button.querySelector('img').src
-    //                 .replace('150x150', '600x600'); // (※ダミー画像のURLハック。本番では不要)
-    //             mainImage.src = newImageSrc;
-    // 
-    //             // 2. すべてのボタンからボーダーを削除
-    //             thumbnailButtons.forEach(btn => btn.classList.remove('border-green-700'));
-    //             thumbnailButtons.forEach(btn => btn.classList.add('border-transparent'));
-    // 
-    //             // 3. クリックされたボタンにボーダーを追加
-    //             button.classList.add('border-green-700');
-    //             button.classList.remove('border-transparent');
-    //         });
-    //     });
-    // }
+    if (mainImage && thumbnailButtons.length > 0) {
+        thumbnailButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // a. クリックされたボタンから大きい画像のURLを取得 (data-full-src属性)
+                //    もしdata属性がない場合(1枚目など)は、直下のimgのsrcを使用するなどのフォールバックも考慮
+                let newImageSrc = button.getAttribute('data-full-src');
+                
+                if (!newImageSrc) {
+                    const img = button.querySelector('img');
+                    if (img) {
+                        newImageSrc = img.src;
+                    }
+                }
 
-    // カートページ (page-cart.php) の数量変更や削除機能
-    // 決済システムのロジックと連携させる必要があります。
+                // b. メイン画像のsrcを更新
+                if (newImageSrc) {
+                    mainImage.src = newImageSrc;
+                }
+
+                // c. すべてのボタンからアクティブスタイル（緑の枠線）を削除
+                thumbnailButtons.forEach(btn => {
+                    btn.classList.remove('border-green-700');
+                    btn.classList.add('border-transparent');
+                });
+
+                // d. クリックされたボタンにアクティブスタイルを追加
+                button.classList.remove('border-transparent');
+                button.classList.add('border-green-700');
+            });
+        });
+    }
 
 });
