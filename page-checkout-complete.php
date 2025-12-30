@@ -51,7 +51,8 @@ get_header();
                         <br>
                         この機会にぜひご登録ください！
                     </p>
-                    <a href="#" class="line-green text-white text-xl font-bold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center">
+                    <!-- LINEリンク修正 -->
+                    <a href="https://lin.ee/Ws6fScK" class="line-green text-white text-xl font-bold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M21.5,4.9C21.1,4 20.1,3.4 19,3.4H5.1c-1.1,0-2.1,0.6-2.5,1.5c-0.3,1.1-0.1,2.2,0.6,3.1l1,1.3c0,0,0,0,0,0 c0.1,0.1,0.1,0.2,0.1,0.3c0,0.1,0,0.2-0.1,0.3c0,0,0,0,0,0l-1,1.3c-0.7,0.9-0.9,2-0.6,3.1C2.9,16,3.9,16.6,5.1,16.6h13.8 c1.1,0,2.1,0.6,2.5,1.5c0.3-1.1,0.1-2.2-0.6-3.1l-1-1.3c0,0,0,0,0,0c-0.1-0.1-0.1-0.2-0.1-0.3c0-0.1,0-0.2,0.1-0.3c0,0,0,0,0,0 l1-1.3C21.6,7.1,21.8,6,21.5,4.9z M9.3,13.3H7.7V9.7h1.6V13.3z M12.5,13.3h-1.6V9.7h1.6V13.3z M15.7,13.3h-1.6V9.7h1.6V13.3z"/></svg>
                         LINE友達に追加する
                     </a>
