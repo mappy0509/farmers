@@ -42,35 +42,49 @@ function farmers_enqueue_scripts() {
 	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap', array(), null );
 
 	// メインのスタイルシート (style.css)
-	// get_stylesheet_uri() は style.css へのパスを自動的に取得します
 	wp_enqueue_style( 'farmers-style', get_stylesheet_uri(), array(), '1.0.0' );
 
 	// メインのJavaScript (script.js)
-	// get_template_directory_uri() はテーマのルートディレクトリへのパスを取得します
-	// 'defer' => true で defer 属性を追加
 	wp_enqueue_script( 'farmers-script', get_template_directory_uri() . '/script.js', array(), '1.0.0', true ); // trueでフッター読み込み
 }
 add_action( 'wp_enqueue_scripts', 'farmers_enqueue_scripts' );
+
+
+/**
+ * テーマカスタマイザーの登録（バナー画像設定などを追加）
+ */
+function farmers_customize_register( $wp_customize ) {
+	
+	// セクションの追加：「トップページ設定」
+	$wp_customize->add_section( 'farmers_front_page_options', array(
+		'title'    => __( 'トップページ設定', 'farmers' ),
+		'priority' => 30, // サイト基本情報の下あたりに表示
+	) );
+
+	// 設定項目の追加：メインバナー画像
+	$wp_customize->add_setting( 'farmers_hero_image', array(
+		'default'   => 'https://placehold.co/1600x900/a3e635/f0fdf4?text=新鮮な野菜のイメージ', // 初期画像
+		'transport' => 'refresh', // 変更時にプレビューをリフレッシュ
+		'sanitize_callback' => 'esc_url_raw',
+	) );
+
+	// コントロールの追加：画像アップローダー
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'farmers_hero_image', array(
+		'label'    => __( 'メインバナー画像', 'farmers' ),
+		'section'  => 'farmers_front_page_options',
+		'settings' => 'farmers_hero_image',
+		'description' => __( 'トップページのメインビジュアルとして表示する画像を設定します。', 'farmers' ),
+	) ) );
+}
+add_action( 'customize_register', 'farmers_customize_register' );
+
 
 /**
  * 決済システムのセットアップ（WooCommerceなど）
  *
  * ここに決済システム（例: WooCommerce）のサポートや
  * カスタマイズコードを追加していきます。
- * * 例：
- * add_theme_support('woocommerce');
  */
-
-/**
- * カスタム投稿タイプ「商品」の登録
- * * 決済システムにWooCommerceを使用する場合、
- * WooCommerceが 'product' 投稿タイプを自動的に作成するため、
- * このコードは不要になる場合があります。
- *
- * function farmers_register_product_post_type() {
- * // ... 登録処理 ...
- * }
- * add_action('init', 'farmers_register_product_post_type');
- */
+// add_theme_support('woocommerce');
 
 ?>

@@ -10,8 +10,22 @@ get_header();
 ?>
 
     <main>
-        <section class="relative h-[60vh] bg-cover bg-center" style="background-image: url('https://placehold.co/1600x900/a3e635/f0fdf4?text=新鮮な野菜のイメージ');">
-            </section>
+        <!-- 
+            メインビジュアルセクション 
+            カスタマイザー（外観 > カスタマイズ > トップページ設定）で設定された画像を表示します。
+        -->
+        <section class="relative w-full">
+            <?php
+            // カスタマイザーの設定を取得。設定がない場合はデフォルトのプレースホルダーを使用。
+            $hero_image_default = 'https://placehold.co/1600x900/a3e635/f0fdf4?text=新鮮な野菜のイメージ';
+            $hero_image_url = get_theme_mod( 'farmers_hero_image', $hero_image_default );
+            ?>
+            <img 
+                src="<?php echo esc_url( $hero_image_url ); ?>" 
+                alt="メインバナー" 
+                class="w-full h-auto align-bottom"
+            >
+        </section>
 
         <section id="products" class="py-16 bg-white">
             <div class="container mx-auto px-4 text-center">
